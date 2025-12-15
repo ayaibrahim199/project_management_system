@@ -44,4 +44,9 @@ public class TaskService {
     public List<Tasks> getTasksByProjectId(Long projectId) {
         return taskRepository.findByProjectId(projectId);
     }
+
+    // F. استرداد المهام المسندة لمستخدم معين
+    public List<Tasks> getTasksByAssignedUserId(Long userId) {
+        return taskRepository.findByAssignedUserId(userId);
+    }
 }

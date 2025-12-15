@@ -57,9 +57,9 @@
                     <div class="card-header"><h2>Stats</h2></div>
                     <div class="card-body">
                         <div style="display:flex;flex-direction:column;gap:12px;">
-                            <div style="display:flex;justify-content:space-between;"><strong>Projects</strong><span>0</span></div>
-                            <div style="display:flex;justify-content:space-between;"><strong>Open Tasks</strong><span>0</span></div>
-                            <div style="display:flex;justify-content:space-between;"><strong>Teams</strong><span>0</span></div>
+                            <div style="display:flex;justify-content:space-between;"><strong>Projects</strong><span th:text="${projectsCount}">0</span></div>
+                            <div style="display:flex;justify-content:space-between;"><strong>Open Tasks</strong><span th:text="${openTasksCount}">0</span></div>
+                            <div style="display:flex;justify-content:space-between;"><strong>Teams</strong><span th:text="${teamsCount}">0</span></div>
                         </div>
                     </div>
                 </div>
