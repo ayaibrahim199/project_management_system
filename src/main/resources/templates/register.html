@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register - Team Collaboration</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+    <header th:replace="~{fragments/navbar :: navbar}"></header>
+    <div class="register-container">
+        <div class="register-title">Create Account</div>
+        <div th:if="${successMessage}" class="" style="color:green;text-align:center;margin-bottom:12px;" th:text="${successMessage}"></div>
+        <form th:action="@{/register}" th:object="${user}" method="post">
+            <div th:if="${#fields.hasGlobalErrors()}" class="error" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
+
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" th:field="*{username}" required autofocus />
+                <div class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" th:field="*{email}" required />
+                <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" th:field="*{password}" required />
+                <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required />
+            </div>
+
+            <button type="submit" class="btn-success">Register</button>
+        </form>
+        <a th:href="@{/login}" class="login-link">Already have an account? Login</a>
+    </div>
+</body>
+</html>

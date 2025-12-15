@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Home - Project Management</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+    <header th:replace="~{fragments/navbar :: navbar}"></header>
+
+    <main class="container">
+        <div class="page-header">
+            <div style="display:flex;align-items:center;gap:18px;">
+                <div class="avatar" aria-hidden="true"><span id="user-initial">U</span></div>
+                <div>
+                    <h1>Welcome back, <span id="username" sec:authentication="name">User</span></h1>
+                    <p>Overview of your projects, tasks, and teams. Quick actions below to get started.</p>
+                </div>
+            </div>
+            <div class="page-header-actions">
+                <div class="btn-group">
+                    <a th:href="@{/projects}" class="btn btn-primary">New Project</a>
+                    <a th:href="@{/tasks}" class="btn btn-secondary">Create Task</a>
+                </div>
+            </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns: 1fr 360px; gap:24px;align-items:start;">
+            <!-- Main column -->
+            <section>
+                <div class="card" style="margin-bottom:20px;">
+                    <div class="card-header">
+                        <h2>Quick Actions</h2>
+                    </div>
+                    <div class="card-body" style="display:flex;gap:16px;flex-wrap:wrap;padding:16px;">
+                        <a th:href="@{/projects}" class="btn btn-primary" style="flex:1;min-width:160px;">Projects</a>
+                        <a th:href="@{/tasks}" class="btn btn-secondary" style="flex:1;min-width:160px;">Tasks</a>
+                        <a th:href="@{/teams}" class="btn btn-success" style="flex:1;min-width:160px;">Teams</a>
+                        <a th:href="@{/users}" class="btn btn-secondary" style="flex:1;min-width:160px;">Users</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h2>Recent Activity</h2></div>
+                    <div class="card-body">
+                        <ul style="list-style:none;padding:0;margin:0;">
+                            <li style="padding:12px 0;border-bottom:1px solid var(--border-color);">No recent activity yet. Create a project to get started.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right column -->
+            <aside>
+                <div class="card" style="margin-bottom:20px;">
+                    <div class="card-header"><h2>Stats</h2></div>
+                    <div class="card-body">
+                        <div style="display:flex;flex-direction:column;gap:12px;">
+                            <div style="display:flex;justify-content:space-between;"><strong>Projects</strong><span>0</span></div>
+                            <div style="display:flex;justify-content:space-between;"><strong>Open Tasks</strong><span>0</span></div>
+                            <div style="display:flex;justify-content:space-between;"><strong>Teams</strong><span>0</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h2>Tips</h2></div>
+                    <div class="card-body">
+                        <p style="color:var(--text-secondary);font-size:14px;margin:0;">Use the <strong>New Project</strong> button to create your first project and invite team members.</p>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer style="padding:24px 0;text-align:center;color:var(--text-secondary);">
+        <div class="container">© <span th:text="${#dates.format(#dates.createNow(),'yyyy')}">2025</span> Project Management</div>
+    </footer>
+    <script th:src="@{/js/home.js}"></script>
+</body>
+</html>

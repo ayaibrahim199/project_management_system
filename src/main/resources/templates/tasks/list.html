@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Tasks - Project Management</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+    <header th:replace="~{fragments/navbar :: navbar}"></header>
+
+    <main class="container">
+        <div class="page-header">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <h1>📋 Tasks</h1>
+                <a th:href="@{/tasks/new}" class="btn btn-primary">+ Create New Task</a>
+            </div>
+        </div>
+
+        <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+        <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+
+        <div th:if="${tasks.isEmpty()}" class="empty-state">
+            <div class="empty-state-icon">📝</div>
+            <h2>No Tasks Yet</h2>
+            <p>Create your first task to get started</p>
+            <a th:href="@{/tasks/new}" class="btn btn-primary">+ Create New Task</a>
+        </div>
+
+        <div th:if="${!tasks.isEmpty()}">
+            <table class="tasks-table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Project</th>
+                        <th>Status</th>
+                        <th>Assigned To</th>
+                        <th>Deadline</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="task : ${tasks}">
+                        <td>
+                            <a th:href="@{/tasks/{id}(id=${task.id})}" class="task-title" th:text="${task.description}">Task Title</a>
+                        </td>
+                        <td>
+                            <span th:text="${task.project != null ? task.project.title : 'N/A'}">Project</span>
+                        </td>
+                        <td>
+                            <span class="status-badge" 
+                                  th:classappend="${'status-' + (task.status != null ? task.status.toLowerCase() : 'pending')}"
+                                  th:text="${task.status != null ? task.status : 'Pending'}">Status</span>
+                        </td>
+                        <td>
+                            <span class="assigned-to" th:text="${task.assignedUser != null ? task.assignedUser.username : 'Unassigned'}">User</span>
+                        </td>
+                        <td>
+                            <span th:if="${task.deadline != null}" th:text="${#temporals.format(task.deadline, 'MMM dd, yyyy')}">Deadline</span>
+                            <span th:if="${task.deadline == null}">-</span>
+                        </td>
+                        <td>
+                            <div class="actions">
+                                <a th:href="@{/tasks/{id}(id=${task.id})}" class="btn btn-sm btn-view">View</a>
+                                <a th:href="@{/tasks/edit/{id}(id=${task.id})}" class="btn btn-sm btn-edit">Edit</a>
+                                <form th:action="@{/tasks/delete/{id}(id=${task.id})}" method="post" style="display: inline;">
+                                    <button type="submit" class="btn btn-sm btn-delete" onclick="return confirm('Are you sure you want to delete this task?');">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <footer style="padding:24px 0;text-align:center;color:var(--text-secondary);">
+        <div class="container">© <span th:text="${#dates.format(#dates.createNow(),'yyyy')}">2025</span> Project Management</div>
+    </footer>
+    <script th:src="@{/js/navbar.js}"></script>
+</body>
+</html>

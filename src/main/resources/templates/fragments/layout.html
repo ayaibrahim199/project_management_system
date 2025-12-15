@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:fragment="pageTitle">Task Management System</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"> 
+</head>
+<body>
+
+    <header th:replace="fragments/navbar :: navbar"></header>
+
+    <main class="container">
+        <div th:fragment="content">
+            </div>
+    </main>
+
+    <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}">Success!</div>
+    <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}">Error!</div>
+
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

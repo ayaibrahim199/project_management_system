@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${task.id == null ? 'Create New Task' : 'Edit Task'}">Task Form</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+    <header th:replace="~{fragments/navbar :: navbar}"></header>
+
+    <main class="container">
+        <div class="form-container">
+            <div class="form-header">
+                <h1 th:text="${task.id == null ? '✨ Create New Task' : '✏️ Edit Task'}"></h1>
+            </div>
+
+            <form th:action="@{/tasks}" th:object="${task}" method="post">
+                <input type="hidden" th:field="*{id}" />
+
+                <div class="form-group">
+                    <label for="description">Task Description</label>
+                    <input type="text" id="description" th:field="*{description}" 
+                           placeholder="Enter task description" required/>
+                    <span th:if="${#fields.hasErrors('description')}" 
+                          th:errors="*{description}" 
+                          class="error-message"></span>
+                </div>
+
+                <div class="form-two-cols">
+                    <div class="form-group">
+                        <label for="deadline">Deadline</label>
+                        <input type="date" id="deadline" th:field="*{deadline}" />
+                        <span th:if="${#fields.hasErrors('deadline')}" 
+                              th:errors="*{deadline}" 
+                              class="error-message"></span>
+                    </div>
+
+                    <div class="form-group" th:if="${task.id != null}">
+                        <label for="status">Status</label>
+                        <select id="status" th:field="*{status}">
+                            <option value="PENDING">🔴 Pending</option>
+                            <option value="IN_PROGRESS">🟡 In Progress</option>
+                            <option value="COMPLETED">🟢 Completed</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-two-cols">
+                    <div class="form-group">
+                        <label for="project">Project</label>
+                        <select id="project" th:field="*{project}" required>
+                            <option value="">-- Select Project --</option>
+                            <option th:each="p : ${projects}" 
+                                    th:value="${p.id}" 
+                                    th:text="${p.title}">Project Title</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="assignedUser">Assign To</label>
+                        <select id="assignedUser" th:field="*{assignedUser}">
+                            <option value="">-- Select User --</option>
+                            <option th:each="u : ${users}" 
+                                    th:value="${u.id}" 
+                                    th:text="${u.username}">Username</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <span th:text="${task.id == null ? '➕ Create Task' : '💾 Update Task'}"></span>
+                    </button>
+                    <a th:href="@{/tasks}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+
+            <a th:href="@{/tasks}" class="back-link">← Back to Tasks</a>
+        </div>
+    </main>
+
+    <footer style="background: #f9fafb; border-top: 1px solid #e5e7eb; margin-top: 40px; padding: 20px 0; text-align: center; color: #6b7280;">
+        <p>&copy; 2025 Project Management System. All rights reserved.</p>
+    </footer>
+</body>
+</html>

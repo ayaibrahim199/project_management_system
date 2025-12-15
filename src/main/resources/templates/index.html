@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome - Project Management</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+    <header th:replace="~{fragments/navbar :: navbar}"></header>
+    <div class="landing-card">
+        <img src="/img/logo.webp" alt="Company Logo" class="logo" />
+        <div class="main-title">Welcome to Project Management</div>
+        <div class="subtitle">Manage your projects, tasks, and teams efficiently.</div>
+        <div class="auth-btns">
+            <a th:href="@{/login}" class="btn-login">Login</a>
+            <a th:href="@{/register}" class="btn-register">Register</a>
+        </div>
+    </div>
+</body>
+</html>

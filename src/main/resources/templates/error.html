@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Error</title>
+</head>
+<body>
+
+    <h1>Oops! Something went wrong.</h1>
+    <p>
+        The application encountered an error.
+    </p>
+    
+    <div th:if="${error}" style="color: red;">
+        Error message: <span th:text="${error}"></span>
+    </div>
+    
+    <p>
+        <a th:href="@{/projects}">Go to Home Page</a>
+    </p>
+
+</body>
+</html>

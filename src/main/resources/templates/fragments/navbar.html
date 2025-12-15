@@ -1,0 +1,30 @@
+<nav th:fragment="navbar" class="navbar" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <div class="container nav-container" sec:authorize="isAuthenticated()" style="display:flex;justify-content:space-between;align-items:center;">
+        <div style="display:flex;align-items:center;gap:12px;">
+            <a th:href="@{/home}" class="logo" style="display:flex;align-items:center;gap:10px;">
+                <img src="/img/logo.webp" alt="Logo" style="height:44px;width:44px;object-fit:cover;border-radius:8px;box-shadow:var(--shadow);"/>
+                <span style="font-weight:700;color:var(--primary-color);">Project Management</span>
+            </a>
+        </div>
+
+        <button class="nav-toggle btn btn-sm" aria-expanded="false" aria-label="Toggle navigation">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+
+        <div class="nav-wrap" style="display:flex;align-items:center;gap:18px;">
+            <ul class="nav-links" style="display:flex;gap:20px;align-items:center;list-style:none;margin:0;padding:0;">
+                <li><a th:href="@{/projects}">Projects</a></li>
+                <li><a th:href="@{/tasks}">Tasks</a></li>
+                <li><a th:href="@{/teams}">Teams</a></li>
+            </ul>
+
+            <div class="nav-user">
+                <span sec:authentication="name" style="margin-right:12px;color:var(--text-secondary);">Welcome, <strong sec:authentication="name">User</strong></span>
+                <form th:action="@{/logout}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-sm btn-danger">Logout</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{/js/navbar.js}"></script>
+</nav>

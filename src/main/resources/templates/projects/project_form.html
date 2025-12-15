@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title th:text="${project.id == null ? 'Create Project' : 'Edit Project'}">Project Form</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+    <header th:replace="~{fragments/navbar :: navbar}"></header>
+
+    <main class="container">
+        <div class="form-container">
+            <div class="form-header">
+                <h1 th:text="${project.id == null ? '✨ Create New Project' : '✏️ Edit Project'}"></h1>
+            </div>
+
+            <form th:action="@{/projects}" th:object="${project}" method="post">
+                <input type="hidden" th:field="*{id}" />
+
+                <div class="form-group">
+                    <label for="title">Project Title</label>
+                    <input type="text" id="title" th:field="*{title}" placeholder="Enter project title" required/>
+                    <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" th:field="*{description}" placeholder="Enter project description"></textarea>
+                    <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="manager">Project Manager</label>
+                    <select id="manager" th:field="*{manager}">
+                        <option value="">-- Select a Manager --</option>
+                        <option th:each="u : ${users}" th:value="${u.id}" th:text="${u.username}">Username</option>
+                    </select>
+                    <span th:if="${#fields.hasErrors('manager')}" th:errors="*{manager}" class="error-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="team">Team</label>
+                    <select id="team" th:field="*{team}">
+                        <option value="">-- Select a Team (Optional) --</option>
+                        <option th:each="t : ${teams}" th:value="${t.id}" th:text="${t.name}">Team Name</option>
+                    </select>
+                    <span th:if="${#fields.hasErrors('team')}" th:errors="*{team}" class="error-message"></span>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <span th:text="${project.id == null ? '➕ Create Project' : '💾 Update Project'}"></span>
+                    </button>
+                    <a th:href="@{/projects}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+
+            <a th:href="@{/projects}" class="back-link">← Back to Projects</a>
+        </div>
+    </main>
+
+    <footer style="background: #f9fafb; border-top: 1px solid #e5e7eb; margin-top: 40px; padding: 20px 0; text-align: center; color: #6b7280;">
+        <p>&copy; 2025 Project Management System. All rights reserved.</p>
+    </footer>
+</body>
+</html>

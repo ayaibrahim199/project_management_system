@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teams - Project Management System</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <header th:replace="~{fragments/navbar :: navbar}"></header>
+
+    <main>
+        <div class="teams-container">
+            <div class="page-header">
+                <h1>👥 All Teams</h1>
+                <a th:href="@{/teams/new}" class="btn-create">+ Create New Team</a>
+            </div>
+
+            <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+            <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+
+            <div th:if="${teams.isEmpty()}" class="empty-state">
+                <div class="empty-state-icon">📭</div>
+                <h2>No Teams Yet</h2>
+                <p>Create your first team to start collaborating with your team members!</p>
+                <a th:href="@{/teams/new}" class="btn-create" style="display: inline-block;">+ Create Team</a>
+            </div>
+
+            <div th:if="${!teams.isEmpty()}" class="teams-grid">
+                <div th:each="team : ${teams}" class="team-card">
+                    <div class="team-card-header">
+                        <h3 class="team-name" th:text="${team.name}">Team Name</h3>
+                        <span class="team-badge">Team</span>
+                    </div>
+
+                    <p class="team-description" th:text="${team.description}">Team description</p>
+
+                    <div class="team-info">
+                        <div class="info-item">
+                            <div class="info-number" th:text="${team.members != null ? team.members.size() : 0}">0</div>
+                            <div class="info-label">Members</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-number" th:text="${team.projects != null ? team.projects.size() : 0}">0</div>
+                            <div class="info-label">Projects</div>
+                        </div>
+                    </div>
+
+                    <div class="team-lead">
+                        <strong>Lead:</strong> <span th:text="${team.teamLead.username}">Lead Name</span>
+                    </div>
+
+                    <div class="team-actions">
+                        <a th:href="@{/teams/{id}(id=${team.id})}" class="btn-small btn-view">View</a>
+                        <a th:href="@{/teams/edit/{id}(id=${team.id})}" class="btn-small btn-edit">Edit</a>
+                        <form th:action="@{/teams/delete/{id}(id=${team.id})}" method="post" style="flex: 1;">
+                            <button type="submit" class="btn-small btn-delete" style="width: 100%;" onclick="return confirm('Delete this team?');">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Project Management System. All rights reserved.</p>
+    </footer>
+</body>
+</html>

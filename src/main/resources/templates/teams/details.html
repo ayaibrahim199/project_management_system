@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <header th:replace="~{fragments/navbar :: navbar}"></header>
+            padding: 30px;
+            border-radius: 8px;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .team-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 32px;
+        }
+
+        .team-header p {
+            margin: 5px 0;
+            opacity: 0.95;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+            color: #333;
+        }
+
+        .members-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .member-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.3s ease;
+        }
+
+        .member-item:hover {
+            background: #f8f9ff;
+        }
+
+        .member-item:last-child {
+            border-bottom: none;
+        }
+
+        .member-info {
+            flex: 1;
+        }
+
+        .member-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .member-email {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .member-badge {
+            background: #667eea;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+
+        .member-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-remove {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background 0.3s ease;
+        }
+
+        .btn-remove:hover {
+            background: #c82333;
+        }
+
+        .btn-remove:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .add-member-form {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .add-member-form select,
+        .add-member-form button {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .add-member-form select {
+            flex: 1;
+        }
+
+        .add-member-form button {
+            background: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .add-member-form button:hover {
+            background: #218838;
+        }
+
+        .team-info-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-item {
+            padding: 15px;
+            background: #f8f9ff;
+            border-radius: 6px;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .projects-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .project-item {
+            padding: 12px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .project-item:last-child {
+            border-bottom: none;
+        }
+
+        .project-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .project-status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-inactive {
+            background: #e2e3e5;
+            color: #383d41;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 30px;
+            color: #999;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            text-align: center;
+            transition: background 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border-left: 4px solid;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border-color: #28a745;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <header th:replace="~{fragments/navbar :: navbar}"></header>
+
+    <main>
+        <div class="team-container">
+            <div class="team-header">
+                <h1 th:text="${team.name}">Team Name</h1>
+                <p th:text="${team.description}">Team description goes here</p>
+                <p style="margin-top: 15px; font-size: 14px;">
+                    <strong>Created:</strong> <span th:text="${#temporals.format(team.createdAt, 'MMM dd, yyyy')}">Date</span>
+                </p>
+            </div>
+
+            <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+            <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+
+            <div class="team-info-box">
+                <div class="info-item">
+                    <div class="info-label">Team Lead</div>
+                    <div class="info-value" th:text="${team.teamLead.username}">Lead Name</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Total Members</div>
+                    <div class="info-value" th:text="${team.members != null ? team.members.size() : 0}">0</div>
+                </div>
+            </div>
+
+            <div class="team-grid">
+                <div>
+                    <div class="card">
+                        <h3 class="card-title">👥 Team Members</h3>
+
+                        <div th:if="${team.members.isEmpty()}" class="empty-state">
+                            No members yet. Add members to start collaborating!
+                        </div>
+
+                        <div th:if="${!team.members.isEmpty()}">
+                            <ul class="members-list">
+                                <li th:each="member : ${team.members}" class="member-item">
+                                    <div class="member-info">
+                                        <div class="member-name" th:text="${member.username}">Username</div>
+                                        <div class="member-email" th:text="${member.email}">email@example.com</div>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <span th:if="${member.id == team.teamLead.id}" class="member-badge">Lead</span>
+                                        <div class="member-actions" th:if="${member.id != team.teamLead.id}">
+                                            <form th:action="@{/teams/{teamId}/members/remove/{userId}(teamId=${team.id}, userId=${member.id})}" method="post" style="display: inline;">
+                                                <button type="submit" class="btn-remove" onclick="return confirm('Remove this member?');">Remove</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="add-member-form">
+                            <form th:action="@{/teams/{teamId}/members/add(teamId=${team.id})}" method="post" style="display: flex; gap: 8px; width: 100%;">
+                                <select name="userId" required style="flex: 1; padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px;">
+                                    <option value="">Select user to add...</option>
+                                    <option th:each="user : ${availableUsers}" th:value="${user.id}" th:text="${user.username}">User</option>
+                                </select>
+                                <button type="submit" style="background: #28a745; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-weight: 600;">Add Member</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="card">
+                        <h3 class="card-title">📋 Projects</h3>
+
+                        <div th:if="${team.projects.isEmpty()}" class="empty-state">
+                            No projects assigned yet.
+                        </div>
+
+                        <div th:if="${!team.projects.isEmpty()}">
+                            <ul class="projects-list">
+                                <li th:each="project : ${team.projects}" class="project-item">
+                                    <a th:href="@{/projects/{id}(id=${project.id})}" class="project-name" th:text="${project.title}">Project Name</a>
+                                    <span class="project-status" th:classappend="${'status-' + project.status.toLowerCase()}" th:text="${project.status}">Active</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <a th:href="@{/teams/edit/{id}(id=${team.id})}" class="btn-primary">✏️ Edit Team</a>
+                <a th:href="@{/teams}" class="btn-secondary">← Back to Teams</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Project Management System. All rights reserved.</p>
+    </footer>
+</body>
+</html>

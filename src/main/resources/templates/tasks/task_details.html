@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${task.description} + ' Details'">Task Details</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="details-container">
+        <div class="task-header">
+            <h1 th:text="${task.description}">Task Description</h1>
+            <div class="task-meta">
+                <div class="meta-item">
+                    <div class="meta-label">ID</div>
+                    <div class="meta-value" th:text="${task.id}">123</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Status</div>
+                    <div class="meta-value" th:text="${task.status}">Active</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Deadline</div>
+                    <div class="meta-value" th:text="${task.deadline}">2025-12-31</div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-label">Assigned To</div>
+                    <div class="meta-value" th:text="${task.assignedUser != null ? task.assignedUser.username : 'Unassigned'}">Unassigned</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Attachments Section -->
+        <div class="section">
+            <h2>📎 Attachments</h2>
+            
+            <div th:if="${attachments.isEmpty()}" class="empty-state">
+                <p>No files attached yet. Upload one to get started!</p>
+            </div>
+
+            <div th:if="${!attachments.isEmpty()}">
+                <ul class="attachments-list">
+                    <li th:each="attachment : ${attachments}" class="attachment-item">
+                        <div class="attachment-info">
+                            <span class="attachment-icon">📄</span>
+                            <a th:href="@{/attachments/download/{id}(id=${attachment.id})}" 
+                               th:text="${attachment.fileName}" 
+                               class="attachment-name"></a>
+                        </div>
+                        <div class="attachment-actions">
+                            <a th:href="@{/attachments/download/{id}(id=${attachment.id})}" class="btn-small btn-download">Download</a>
+                            <form th:action="@{/attachments/delete/{id}(id=${attachment.id})}" method="post" style="display: inline;">
+                                <button type="submit" class="btn-small btn-delete" onclick="return confirm('Delete this file?');">Delete</button>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <a th:href="@{/attachments/upload/{taskId}(taskId=${task.id})}" class="btn-upload">+ Upload New Attachment</a>
+        </div>
+
+        <!-- Comments Section -->
+        <div class="comment-section">
+            <h2>💬 Comments</h2>
+            
+            <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+            <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+
+            <div class="comments-list">
+                <div th:if="${comments.isEmpty()}" class="empty-state">
+                    <p>No comments yet. Be the first to comment!</p>
+                </div>
+
+                <div th:each="comment : ${comments}" class="comment">
+                    <div class="comment-header">
+                        <span class="comment-author" th:text="${comment.user != null ? comment.user.username : 'Guest'}">User</span>
+                        <span class="comment-date" th:text="${#temporals.format(comment.createdDate, 'MMM dd, yyyy HH:mm')}">Date</span>
+                    </div>
+                    <p class="comment-content" th:text="${comment.content}">Comment text</p>
+                </div>
+            </div>
+
+            <div class="comment-form">
+                <h3 style="margin-top: 0; color: #333; margin-bottom: 15px;">Add a Comment</h3>
+                <form th:action="@{/tasks/{taskId}/comments(taskId=${task.id})}" 
+                      th:object="${newComment}" method="post">
+                    
+                    <div class="form-group">
+                        <textarea th:field="*{content}" 
+                                  placeholder="Share your thoughts about this task..." 
+                                  rows="4"></textarea>
+                        <span th:if="${#fields.hasErrors('content')}" 
+                              th:errors="*{content}" 
+                              class="alert alert-error"
+                              style="display: block; margin-top: 8px;"></span>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit">Post Comment</button>
+                </form>
+            </div>
+        </div>
+
+        <a th:href="@{/tasks}" class="back-link">← Back to Task List</a>
+    </div>
+</body>
+</html>
