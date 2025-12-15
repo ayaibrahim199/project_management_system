@@ -4,12 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teams - Project Management System</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/style.min.css}">
 </head>
 <body>
     <header th:replace="~{fragments/navbar :: navbar}"></header>
 
     <main>
+        <!-- Optional: If you build the React frontend, open /frontend/ to view the new UI. -->
+        <div class="react-mount-placeholder" style="margin-bottom:16px;">
+            <a href="/frontend/" class="btn-create">Open React UI (optional)</a>
+        </div>
         <div class="teams-container">
             <div class="page-header">
                 <h1>👥 All Teams</h1>
@@ -23,7 +27,7 @@
                 <div class="empty-state-icon">📭</div>
                 <h2>No Teams Yet</h2>
                 <p>Create your first team to start collaborating with your team members!</p>
-                <a th:href="@{/teams/new}" class="btn-create" style="display: inline-block;">+ Create Team</a>
+                <a th:href="@{/teams/new}" class="btn-create">+ Create Team</a>
             </div>
 
             <div th:if="${!teams.isEmpty()}" class="teams-grid">
@@ -53,8 +57,8 @@
                     <div class="team-actions">
                         <a th:href="@{/teams/{id}(id=${team.id})}" class="btn-small btn-view">View</a>
                         <a th:href="@{/teams/edit/{id}(id=${team.id})}" class="btn-small btn-edit">Edit</a>
-                        <form th:action="@{/teams/delete/{id}(id=${team.id})}" method="post" style="flex: 1;">
-                            <button type="submit" class="btn-small btn-delete" style="width: 100%;" onclick="return confirm('Delete this team?');">Delete</button>
+                        <form th:action="@{/teams/delete/{id}(id=${team.id})}" method="post" class="delete-form">
+                            <button type="submit" class="btn-small btn-delete" onclick="return confirm('Delete this team?');">Delete</button>
                         </form>
                     </div>
                 </div>
