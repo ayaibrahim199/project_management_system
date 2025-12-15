@@ -1,3 +1,33 @@
+# Maven / Java
+/target/
+*.log
+
+# IDEs
+/.idea/
+*.iml
+/.classpath
+/.project
+/.settings/
+
+# VS Code
+/.vscode/
+
+# macOS
+.DS_Store
+
+# Environment files
+.env
+*.env
+
+# Uploaded files (runtime)
+/uploads/
+
+# Logs and temp
+*.log
+logs/
+
+# Misc
+.mvn/wrapper/maven-wrapper.jar
 HELP.md
 target/
 .mvn/wrapper/maven-wrapper.jar
