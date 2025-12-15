@@ -7,6 +7,9 @@
     <link rel="stylesheet" th:href="@{/css/style.min.css}">
 </head>
 <body>
+    <header th:replace="~{fragments/navbar :: navbar}"></header>
+
+    <main class="container">
     <div class="upload-container">
         <h1>📁 Upload Attachment</h1>
         
@@ -44,6 +47,11 @@
             </div>
         </form>
     </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Project Management System. All rights reserved.</p>
+    </footer>
 
     <script>
         function updateFileName(input) {
