@@ -7,6 +7,9 @@
     <link rel="stylesheet" th:href="@{/css/style.min.css}">
 </head>
 <body>
+    <header th:replace="~{fragments/navbar :: navbar}"></header>
+
+    <main class="container">
     <div class="details-container">
         <div class="task-header">
             <h1 th:text="${task.description}">Task Description</h1>
@@ -103,5 +106,10 @@
 
         <a th:href="@{/tasks}" class="back-link">← Back to Task List</a>
     </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Project Management System. All rights reserved.</p>
+    </footer>
 </body>
 </html>
