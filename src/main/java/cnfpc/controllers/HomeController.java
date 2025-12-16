@@ -46,10 +46,10 @@ public class HomeController {
         String username = authentication.getName();
         Users user = userService.findByUsername(username);
 
-        // Projects owned/managed by the user
+        // Projects owned/managed by the user (use repository count to avoid loading lists)
         int projectsCount = 0;
         if (user != null) {
-            if (user.getManagedProjects() != null) projectsCount = user.getManagedProjects().size();
+            projectsCount = (int) projectService.countProjectsManagedBy(user.getId());
         }
 
         // Teams where the user is a member

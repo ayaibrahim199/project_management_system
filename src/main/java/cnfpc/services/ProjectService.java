@@ -38,4 +38,9 @@ public class ProjectService {
     public void deleteProjectById(Long id) {
         projectRepository.deleteById(id);
     }
+
+    // E. Count projects managed by a specific user
+    public long countProjectsManagedBy(Long managerId) {
+        return projectRepository.countByManagerId(managerId);
+    }
 }

@@ -5,135 +5,92 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${team.name} + ' - Team'">Team Details</title>
     <link rel="stylesheet" th:href="@{/css/style.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.enhancements.css}">
 </head>
 <body>
     <header th:replace="~{fragments/navbar :: navbar}"></header>
-
-        .btn-secondary {
-            background: #6c757d;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background 0.3s ease;
-        }
-
-        .btn-secondary:hover {
-            background: #5a6268;
-        }
-
-        .alert {
-            padding: 15px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            border-left: 4px solid;
-        }
-
-        .alert-success {
-            background: #d4edda;
-            color: #155724;
-            border-color: #28a745;
-        }
-
-        .alert-error {
-            background: #f8d7da;
-            color: #721c24;
-            border-color: #f5c6cb;
-        }
-    </style>
-</head>
-<body>
-    <header th:replace="~{fragments/navbar :: navbar}"></header>
-
-    <main>
-        <div class="team-container">
-            <div class="team-header">
-                <h1 th:text="${team.name}">Team Name</h1>
-                <p th:text="${team.description}">Team description goes here</p>
-                <p style="margin-top: 15px; font-size: 14px;">
-                    <strong>Created:</strong> <span th:text="${#temporals.format(team.createdAt, 'MMM dd, yyyy')}">Date</span>
-                </p>
+    <main class="container">
+        <section class="page-header">
+            <h1>
+                <span th:text="${team.name}">Team Name</span>
+            </h1>
+            <div style="display:flex;gap:10px;align-items:center;">
+                <a th:href="@{/teams/edit/{id}(id=${team.id})}" class="btn-create">✏️ Edit</a>
+                <a th:href="@{/teams}" class="btn-small" style="background:transparent;color:var(--muted);border:1px solid rgba(11,26,43,0.06);">← Back to Teams</a>
             </div>
+        </section>
 
-            <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
-            <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+        <div style="margin-bottom:18px;color:var(--muted);font-size:14px;">
+            <strong>Created:</strong> <span th:text="${#temporals.format(team.createdAt, 'MMM dd, yyyy')}">Date</span>
+            &nbsp;&nbsp;•&nbsp;&nbsp;
+            <strong>Team Lead:</strong> <span th:text="${team.teamLead.username}">Lead Name</span>
+            &nbsp;&nbsp;•&nbsp;&nbsp;
+            <strong>Total Members:</strong> <span th:text="${team.members != null ? team.members.size() : 0}">0</span>
+        </div>
 
-            <div class="team-info-box">
-                <div class="info-item">
-                    <div class="info-label">Team Lead</div>
-                    <div class="info-value" th:text="${team.teamLead.username}">Lead Name</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">Total Members</div>
-                    <div class="info-value" th:text="${team.members != null ? team.members.size() : 0}">0</div>
-                </div>
-            </div>
+        <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+        <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
 
-            <div class="team-grid">
-                <div>
-                    <div class="card">
-                        <h3 class="card-title">👥 Team Members</h3>
-
-                        <div th:if="${team.members.isEmpty()}" class="empty-state">
-                            No members yet. Add members to start collaborating!
-                        </div>
-
-                        <div th:if="${!team.members.isEmpty()}">
-                            <ul class="members-list">
-                                <li th:each="member : ${team.members}" class="member-item">
-                                    <div class="member-info">
-                                        <div class="member-name" th:text="${member.username}">Username</div>
-                                        <div class="member-email" th:text="${member.email}">email@example.com</div>
-                                    </div>
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        <span th:if="${member.id == team.teamLead.id}" class="member-badge">Lead</span>
-                                        <div class="member-actions" th:if="${member.id != team.teamLead.id}">
-                                            <form th:action="@{/teams/{teamId}/members/remove/{userId}(teamId=${team.id}, userId=${member.id})}" method="post" style="display: inline;">
-                                                <button type="submit" class="btn-remove" onclick="return confirm('Remove this member?');">Remove</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="add-member-form">
-                            <form th:action="@{/teams/{teamId}/members/add(teamId=${team.id})}" method="post" style="display: flex; gap: 8px; width: 100%;">
-                                <select name="userId" required style="flex: 1; padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px;">
-                                    <option value="">Select user to add...</option>
-                                    <option th:each="user : ${availableUsers}" th:value="${user.id}" th:text="${user.username}">User</option>
-                                </select>
-                                <button type="submit" style="background: #28a745; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-weight: 600;">Add Member</button>
-                            </form>
-                        </div>
-                    </div>
+        <div class="teams-grid">
+            <div class="team-card">
+                <div class="team-card-header">
+                    <h3 class="team-name">👥 Team Members</h3>
+                    <span class="team-badge" th:text="${team.members != null ? team.members.size() : 0}">0</span>
                 </div>
 
-                <div>
-                    <div class="card">
-                        <h3 class="card-title">📋 Projects</h3>
+                <div th:if="${team.members.isEmpty()}" class="empty-state">
+                    <div class="empty-state-icon">👥</div>
+                    <div>No members yet. Add members to start collaborating.</div>
+                </div>
 
-                        <div th:if="${team.projects.isEmpty()}" class="empty-state">
-                            No projects assigned yet.
-                        </div>
+                <div th:if="${!team.members.isEmpty()}">
+                    <ul class="members-list">
+                        <li th:each="member : ${team.members}" style="padding:10px 0;border-bottom:1px solid #f3f4f6;display:flex;justify-content:space-between;align-items:center;">
+                            <div>
+                                <div style="font-weight:700;color:#0b1a2b;" th:text="${member.username}">Username</div>
+                                <div style="font-size:13px;color:var(--muted);" th:text="${member.email}">email@example.com</div>
+                            </div>
+                            <div style="display:flex;gap:8px;align-items:center;">
+                                <span th:if="${member.id == team.teamLead.id}" class="team-badge">Lead</span>
+                                <div th:if="${member.id != team.teamLead.id}">
+                                    <form th:action="@{/teams/{teamId}/members/remove/{userId}(teamId=${team.id}, userId=${member.id})}" method="post" style="display:inline;">
+                                        <button type="submit" class="btn-small btn-delete" onclick="return confirm('Remove this member?');">Remove</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
 
-                        <div th:if="${!team.projects.isEmpty()}">
-                            <ul class="projects-list">
-                                <li th:each="project : ${team.projects}" class="project-item">
-                                    <a th:href="@{/projects/{id}(id=${project.id})}" class="project-name" th:text="${project.title}">Project Name</a>
-                                    <span class="project-status" th:classappend="${'status-' + project.status.toLowerCase()}" th:text="${project.status}">Active</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                <div class="add-member-form" style="margin-top:12px;">
+                    <form th:action="@{/teams/{teamId}/members/add(teamId=${team.id})}" method="post" style="display:flex;gap:8px;">
+                        <select name="userId" required style="flex:1;padding:10px;border:1px solid #e6e9ef;border-radius:8px;">
+                            <option value="">Select user to add...</option>
+                            <option th:each="user : ${availableUsers}" th:value="${user.id}" th:text="${user.username}">User</option>
+                        </select>
+                        <button type="submit" class="btn-small btn-view" style="background:#28a745;color:#fff;border:none;padding:8px 12px;border-radius:8px;">Add Member</button>
+                    </form>
                 </div>
             </div>
 
-            <div class="action-buttons">
-                <a th:href="@{/teams/edit/{id}(id=${team.id})}" class="btn-primary">✏️ Edit Team</a>
-                <a th:href="@{/teams}" class="btn-secondary">← Back to Teams</a>
+            <div class="team-card">
+                <div class="team-card-header">
+                    <h3 class="team-name">📋 Projects</h3>
+                </div>
+
+                <div th:if="${team.projects.isEmpty()}" class="empty-state">
+                    <div class="empty-state-icon">📁</div>
+                    <div>No projects assigned yet.</div>
+                </div>
+
+                <div th:if="${!team.projects.isEmpty()}">
+                    <ul class="projects-list" style="list-style:none;padding:0;margin:0;">
+                        <li th:each="project : ${team.projects}" style="padding:10px 0;border-bottom:1px solid #f3f4f6;display:flex;justify-content:space-between;align-items:center;">
+                            <a th:href="@{/projects/{id}(id=${project.id})}" class="project-name" th:text="${project.title}" style="font-weight:700;color:var(--accent-2);text-decoration:none;">Project Name</a>
+                            <span class="team-badge" th:text="${project.status}">Active</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </main>

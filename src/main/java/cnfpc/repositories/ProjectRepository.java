@@ -8,6 +8,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProjectRepository extends JpaRepository<Projects, Long> {
 
+	// Count projects managed by a specific user
+	long countByManagerId(Long managerId);
+
 
 
 

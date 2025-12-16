@@ -54,6 +54,14 @@ public class Users {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
+    // Managed projects accessors
+    public List<Projects> getManagedProjects() { return managedProjects; }
+    public void setManagedProjects(List<Projects> managedProjects) { this.managedProjects = managedProjects; }
+
+    // Assigned tasks accessors
+    public List<Tasks> getAssignedTasks() { return assignedTasks; }
+    public void setAssignedTasks(List<Tasks> assignedTasks) { this.assignedTasks = assignedTasks; }
+
 }
     
 

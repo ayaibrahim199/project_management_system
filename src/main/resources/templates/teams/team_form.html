@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${team.id != null ? 'Edit Team' : 'Create Team'} + ' - Project Management System'">Team Form</title>
     <link rel="stylesheet" th:href="@{/css/style.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.enhancements.css}">
 </head>
 <body>
     <header th:replace="~{fragments/navbar :: navbar}"></header>
+    <main class="container">
+        <section class="page-header">
+            <h1 th:if="${team.id == null}">🆕 Create New Team</h1>
+            <h1 th:if="${team.id != null}">✏️ Edit Team</h1>
+        </section>
 
-    <main>
         <div class="form-container">
-            <div class="form-header">
-                <h1 th:if="${team.id == null}">🆕 Create New Team</h1>
-                <h1 th:if="${team.id != null}">✏️ Edit Team</h1>
-            </div>
-
             <div class="form-card">
                 <div th:if="${errors}" class="alert alert-error">
                     <div th:each="error : ${errors}">
@@ -27,19 +27,19 @@
                     <input type="hidden" th:if="${team.id != null}" th:field="*{id}" />
                     <div class="form-group">
                         <label for="name">Team Name <span class="required">*</span></label>
-                        <input type="text" id="name" name="name" th:value="*{name}" required maxlength="100" placeholder="Enter team name">
+                        <input type="text" id="name" name="name" th:value="*{name}" required maxlength="100" placeholder="Enter team name" class="form-input">
                         <div class="help-text">Choose a descriptive name for your team (max 100 characters)</div>
                     </div>
 
                     <div class="form-group">
                         <label for="description">Description</label>
-                        <textarea id="description" name="description" th:value="*{description}" placeholder="Enter team description (optional)"></textarea>
+                        <textarea id="description" name="description" th:value="*{description}" placeholder="Enter team description (optional)" class="form-textarea"></textarea>
                         <div class="help-text">Describe the purpose and goals of this team</div>
                     </div>
 
                     <div class="form-group">
                         <label for="teamLeadId">Team Lead <span class="required">*</span></label>
-                        <select id="teamLeadId" name="teamLeadId" required>
+                        <select id="teamLeadId" name="teamLeadId" required class="form-select">
                             <option value="">Select team lead...</option>
                             <option th:each="user : ${users}" th:value="${user.id}" th:selected="${team.teamLead != null && team.teamLead.id == user.id}" th:text="${user.username + ' (' + user.email + ')'}">User</option>
                         </select>
@@ -49,7 +49,7 @@
                     <div class="form-group">
                         <label for="memberIds">Team Members <span class="required">*</span></label>
                         <div style="position: relative;">
-                            <select id="memberIds" name="memberIds" multiple size="8" required class="member-select">
+                            <select id="memberIds" name="memberIds" multiple size="8" required class="form-select member-select">
                                 <option th:each="user : ${users}"
                                         th:value="${user.id}"
                                         th:selected="${team.members != null and #lists.contains(team.members, user)}"
