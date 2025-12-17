@@ -98,14 +98,6 @@ For production, use environment variables:
 
 ---
 
-## Contribution Guide
 
-- Always create a new branch from `main`.  
-- Submit pull requests with clear and concise descriptions.  
-- Run all tests before submitting changes:  
-  ```bash
-  ./mvnw test
-  ```  
-- Keep UI and backend changes scoped separately unless necessary.
 
 
