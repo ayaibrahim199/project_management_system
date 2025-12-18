@@ -7,14 +7,31 @@
 </head>
 <body>
     <header th:replace="~{fragments/navbar :: navbar}"></header>
-    <div class="landing-card">
-        <img src="/img/logo.webp" alt="Company Logo" class="logo" />
-        <div class="main-title">Welcome to Project Management</div>
-        <div class="subtitle">Manage your projects, tasks, and teams efficiently.</div>
-        <div class="auth-btns">
-            <a th:href="@{/login}" class="btn-login">Login</a>
-            <a th:href="@{/register}" class="btn-register">Register</a>
+
+    <main class="auth-container">
+        <div class="auth-card">
+            <div style="display:flex;align-items:center;gap:14px;margin-bottom:8px;">
+                <img src="/img/logo.webp" alt="logo" style="height:56px;width:56px;border-radius:10px;object-fit:cover;" />
+                <div>
+                    <h1 style="margin:0;font-size:22px;color:var(--text-primary);">ProjectManagement System</h1>
+                    <div style="color:var(--text-secondary);font-size:13px;">Collaborate, track, and deliver — from idea to completion.</div>
+                </div>
+            </div>
+
+            <p class="subtitle" style="margin-top:14px;">Organize your work with projects, assign tasks, and manage teams effortlessly.</p>
+
+            <div style="display:flex;gap:12px;margin-top:20px;">
+                <a th:href="@{/login}" class="btn btn-primary">Login</a>
+                <a th:href="@{/register}" class="btn btn-secondary">Register</a>
+            </div>
+
+            <div style="margin-top:18px;color:var(--text-secondary);font-size:13px;">
+                <strong>Quick links:</strong>
+                <a th:href="@{/projects}" style="margin-left:8px;">Projects</a>
+                <a th:href="@{/tasks}" style="margin-left:8px;">Tasks</a>
+                <a th:href="@{/teams}" style="margin-left:8px;">Teams</a>
+            </div>
         </div>
-    </div>
+    </main>
 </body>
 </html>
