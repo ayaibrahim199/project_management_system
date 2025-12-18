@@ -2,13 +2,11 @@
 
 ## Overview
 
-A lightweight web application for managing projects, tasks, teams, and attachments. Developed using **Spring Boot** with an optional **Vite + React** frontend for progressive enhancement.
+A lightweight web application for managing projects, tasks, teams, and attachments. Developed using **Spring Boot** .
 
 ### Key Features:
 - Core: Java 25, Spring Boot, Thymeleaf templates, PostgreSQL database
 - Attachments: Upload and download support
-- Optional Frontend: React (Vite) integration
-- Centralized Styling: Manage CSS in one place for consistency
 
 ---
 
@@ -20,7 +18,6 @@ Make sure you have these installed:
 1. Java 25 SDK
 2. PostgreSQL (set up credentials in `application.properties`)
 3. Maven (`./mvnw` wrapper included)
-4. Node.js + npm (optional, for frontend development)
 
 ### Steps to Run:
 
@@ -37,16 +34,8 @@ Make sure you have these installed:
      ```bash
      ./mvnw spring-boot:run
      ```  
-   - The app will be accessible at: `http://localhost:8080/`.
+   - The app will be accessible at: `http://localhost:8080/login`.
 
-3. **(Optional) Frontend Development**  
-   - Go to the `frontend/` directory, then install and start the development server:  
-     ```bash
-     cd frontend
-     npm install
-     npm run dev
-     ```  
-   - For production, copy the resulting `frontend/dist/` folder to `src/main/resources/static/frontend`.
 
 ---
 
